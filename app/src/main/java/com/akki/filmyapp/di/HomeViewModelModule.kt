@@ -7,15 +7,15 @@ import com.akki.filmyapp.logging.ILogger
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.components.ViewModelComponent
-
+import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class HomeActivityModule {
+object HomeViewModelModule {
 
     @Provides
+    @ViewModelScoped
     fun provideHomeRepository(apiLogger: ILogger, apiService: ApiInterface): IHomeRepository {
         return HomeRepositoryImpl(apiService, apiLogger)
     }

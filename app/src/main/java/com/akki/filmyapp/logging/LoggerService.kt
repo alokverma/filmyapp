@@ -4,8 +4,8 @@ import timber.log.Timber
 
 class LoggerService : ILogger {
 
-    override fun logMessage(message: String) {
-        Timber.tag("LoggerService").d(message)
+    override fun logMessage(tag: String, message: String) {
+        Timber.tag(tag).d(message)
     }
 
     override fun logException(exception: Exception) {
