@@ -1,5 +1,6 @@
 package com.akki.filmyapp.di
 
+import android.app.Activity
 import android.content.Context
 import com.akki.filmyapp.home.presentation.PagerImageAdapter
 import dagger.Module
@@ -21,4 +22,13 @@ object HomeModule {
     ): PagerImageAdapter {
         return PagerImageAdapter(context)
     }
+
+    // @fixme
+//    @Provides
+//    @FragmentScoped
+//    fun provideMoviePagerAdapter(
+//        @ActivityContext context: Context,
+//    ): MoviePagerAdapter {
+//        return MoviePagerAdapter((context as Activity))
+//    }
 }

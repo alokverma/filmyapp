@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.akki.filmyapp.databinding.FragmentHomeBinding
 import com.akki.filmyapp.logging.ILogger
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -22,6 +24,9 @@ class HomeFragment : Fragment() {
     @Inject
     lateinit var mAdapter: PagerImageAdapter
 
+    //fixme inject via hilt
+    private var mMovieAdapter: MoviePagerAdapter? = null
+
     private val homeViewModel: HomeViewModel by viewModels()
 
     private val TAG = "HomeFragment"
@@ -32,22 +37,28 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(layoutInflater)
+        binding = FragmentHomeBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeChanges()
-        homeViewModel.fetchTrendingVideos()
+        fetchHomeData()
     }
 
+    private fun fetchHomeData() {
+        homeViewModel.fetchHomeViewData()
+        lifecycleScope.launchWhenStarted {
+            homeViewModel.homeStateUIModel.collect {
+                binding.viewPagerMain.adapter = mAdapter
+                mAdapter.updateItems(it?.movieList?.results ?: emptyList())
 
-    private fun observeChanges() {
-        homeViewModel.trendingMovies.observe(viewLifecycleOwner) {
-            logger.logMessage(TAG, it.toString())
-            binding.viewPagerMain.adapter = mAdapter
-            mAdapter.updateItems(it?.results ?: emptyList())
+                mMovieAdapter = MoviePagerAdapter(parentFragmentManager).apply {
+                    updateItem(it?.tabs ?: emptyList())
+                }
+                binding.tabLayout.setupWithViewPager(binding.pager)
+                binding.pager.adapter = mMovieAdapter
+            }
         }
     }
 }
