@@ -20,7 +20,7 @@ class MoviePagerAdapter @Inject constructor(fm: FragmentManager) : FragmentState
     }
 
     override fun getItem(position: Int): Fragment {
-        return MovieListFragment()
+        return MovieListFragment.newInstance(tabItem[position].type)
     }
 
     override fun getPageTitle(position: Int): CharSequence {

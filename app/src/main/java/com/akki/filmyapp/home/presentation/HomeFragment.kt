@@ -8,8 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.akki.filmyapp.databinding.FragmentHomeBinding
+import com.akki.filmyapp.home.domain.model.MovieItem
 import com.akki.filmyapp.logging.ILogger
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
@@ -52,12 +54,26 @@ class HomeFragment : Fragment() {
             homeViewModel.homeStateUIModel.collect {
                 binding.viewPagerMain.adapter = mAdapter
                 mAdapter.updateItems(it?.movieList?.results ?: emptyList())
-
+                autoRotatePager(it?.movieList?.results)
                 mMovieAdapter = MoviePagerAdapter(parentFragmentManager).apply {
                     updateItem(it?.tabs ?: emptyList())
                 }
                 binding.tabLayout.setupWithViewPager(binding.pager)
                 binding.pager.adapter = mMovieAdapter
+
+            }
+        }
+    }
+
+    private suspend fun autoRotatePager(list: List<MovieItem>?) {
+        var i = 0
+        list?.forEach {
+            delay(3000)
+            binding.viewPagerMain.setCurrentItem(i, true)
+            i++
+            if (i == list.size) {
+                i = 0
+                autoRotatePager(list)
             }
         }
     }

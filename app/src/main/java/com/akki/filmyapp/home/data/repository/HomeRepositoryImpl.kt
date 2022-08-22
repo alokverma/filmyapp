@@ -18,11 +18,11 @@ class HomeRepositoryImpl @Inject constructor(
     private val logger: ILogger
 ) : IHomeRepository {
 
-    override suspend fun getTrendingMovies() : Flow<Resource<MovieList>> =
+    override suspend fun getMovies(type: String) : Flow<Resource<MovieList>> =
          flow {
             try {
                 emit(Resource.Loading(true))
-                emit(Resource.Success(data = apiService.getMovies("top_rated")))
+                emit(Resource.Success(data = apiService.getMovies(type)))
             } catch ( io : IOException){
                 logger.logException(io)
                 emit(Resource.Loading(false))
@@ -48,7 +48,6 @@ class HomeRepositoryImpl @Inject constructor(
     override suspend fun fetchTabs(): Flow<List<MovieTabs>> {
         return flow {
             val tabs = mutableListOf<MovieTabs>()
-            tabs.add(MovieTabs("latest","Latest"))
             tabs.add(MovieTabs("now_playing", "Now Playing"))
             tabs.add(MovieTabs("top_rated", "Top Rated"))
             tabs.add(MovieTabs("upcoming", "Upcoming"))
