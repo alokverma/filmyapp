@@ -1,5 +1,6 @@
 package com.akki.filmyapp.home.presentation
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akki.filmyapp.basemodel.Resource
@@ -27,23 +28,27 @@ class HomeViewModel @Inject constructor(
     val moviesData: StateFlow<MovieList?>
         get() = _moviesData.asStateFlow()
 
+
     fun fetchHomeViewData() {
         viewModelScope.launch {
+            homeRepository.getMovies("popular").
             combine(
-                homeRepository.getMovies("popular"),
                 homeRepository.fetchTabs()
             ) { trending: Resource<MovieList>, tabs: List<MovieTabs> ->
-                return@combine HomeState(tabs, trending.data)
-            }.collect { uiState ->
-                _homeStateUIModel.value = uiState
+                HomeState(tabs, trending.data)
+            }.stateIn(viewModelScope).collect {
+                _homeStateUIModel.value = it
             }
         }
     }
+
+
 
     fun fetchMovies(type: String) {
         viewModelScope.launch {
             homeRepository.getMovies(type).collect {
                 _moviesData.value = it.data
+
             }
         }
     }

@@ -26,7 +26,7 @@ class MovieListAdapter @Inject constructor(val imageLoader: IImageLoader) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view: View =
-            LayoutInflater.from(parent.getContext())
+            LayoutInflater.from(parent.context)
                 .inflate(
                     R.layout.movie_item,
                     parent,
