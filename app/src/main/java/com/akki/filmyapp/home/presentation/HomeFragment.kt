@@ -49,7 +49,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun fetchHomeData() {
-        homeViewModel.fetchHomeViewData()
+        homeViewModel.fetchMovies("popular")
         lifecycleScope.launchWhenStarted {
             homeViewModel.homeStateUIModel.collect {
                 binding.viewPagerMain.adapter = mAdapter

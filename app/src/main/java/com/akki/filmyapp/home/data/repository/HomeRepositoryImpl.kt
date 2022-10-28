@@ -18,40 +18,52 @@ class HomeRepositoryImpl @Inject constructor(
     private val logger: ILogger
 ) : IHomeRepository {
 
-    override suspend fun getMovies(type: String) : Flow<Resource<MovieList>> =
-         flow {
-            try {
-                emit(Resource.Loading(true))
-                emit(Resource.Success(data = apiService.getMovies(type)))
-            } catch ( io : IOException){
-                logger.logException(io)
-                emit(Resource.Loading(false))
-                emit(Resource.Error("Something went wrong"))
-            } catch (e: HttpException) {
-                logger.logException(e)
-                emit(Resource.Loading(false))
-                emit(Resource.Error("Something went wrong, please try again"))
-            }
-        }
 
-    override suspend fun fetchGenre(): Flow<Resource<Genre>> = flow {
-        try {
-            emit(Resource.Loading(true))
-            emit(Resource.Success(apiService.getGenere()))
-        } catch (io: IOException) {
-            logger.logException(io)
-            emit(Resource.Loading(false))
-            emit(Resource.Error("Something went wrong, please try again"))
-        }
+    //    override suspend fun getMovies(type: String) =
+//         flow {
+//            try {
+//                emit(Resource.Loading(true))
+//                emit(Resource.Success(data = apiService.getMovies(type)))
+//            } catch ( io : IOException){
+//                logger.logException(io)
+//                emit(Resource.Loading(false))
+//                emit(Resource.Error("Something went wrong"))
+//            } catch (e: HttpException) {
+//                logger.logException(e)
+//                emit(Resource.Loading(false))
+//                emit(Resource.Error("Something went wrong, please try again"))
+//            }
+//        }
+//
+//    override suspend fun fetchGenre(): Flow<Resource<Genre>> = flow {
+//        try {
+//            emit(Resource.Loading(true))
+//            emit(Resource.Success(apiService.getGenere()))
+//        } catch (io: IOException) {
+//            logger.logException(io)
+//            emit(Resource.Loading(false))
+//            emit(Resource.Error("Something went wrong, please try again"))
+//        }
+//    }
+//
+//    override suspend fun fetchTabs(): Flow<List<MovieTabs>> {
+//        return flow {
+//            val tabs = mutableListOf<MovieTabs>()
+//            tabs.add(MovieTabs("now_playing", "Now Playing"))
+//            tabs.add(MovieTabs("top_rated", "Top Rated"))
+//            tabs.add(MovieTabs("upcoming", "Upcoming"))
+//            emit(tabs)
+//        }
+//    }
+    override suspend fun getMovies(type: String): MovieList {
+        return apiService.getMovies(type)
     }
 
-    override suspend fun fetchTabs(): Flow<List<MovieTabs>> {
-        return flow {
-            val tabs = mutableListOf<MovieTabs>()
-            tabs.add(MovieTabs("now_playing", "Now Playing"))
-            tabs.add(MovieTabs("top_rated", "Top Rated"))
-            tabs.add(MovieTabs("upcoming", "Upcoming"))
-            emit(tabs)
-        }
+    override suspend fun fetchGenre(): Genre? {
+        return apiService.getGenere()
+    }
+
+    override suspend fun fetchTabs(): MovieTabs? {
+        return null
     }
 }

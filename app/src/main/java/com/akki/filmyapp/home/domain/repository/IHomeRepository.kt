@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface IHomeRepository {
 
-    suspend fun getMovies(type: String) : Flow<Resource<MovieList>>
+    suspend fun getMovies(type: String) : MovieList
 
-    suspend fun fetchGenre(): Flow<Resource<Genre>>
+    suspend fun fetchGenre(): Genre?
 
-    suspend fun fetchTabs(): Flow<List<MovieTabs>>
+    suspend fun fetchTabs(): MovieTabs?
 }

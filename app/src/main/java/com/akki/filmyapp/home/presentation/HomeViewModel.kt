@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akki.filmyapp.basemodel.Resource
+import com.akki.filmyapp.home.domain.getmoviesusecase.FetchMoviesUseCase
 import com.akki.filmyapp.home.domain.model.HomeState
 import com.akki.filmyapp.home.domain.model.MovieList
 import com.akki.filmyapp.home.domain.model.MovieTabs
@@ -16,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val homeRepository: IHomeRepository,
+   private val fetchMoviesUseCase: FetchMoviesUseCase,
     private val logger: ILogger
 ) : ViewModel() {
 
@@ -29,27 +30,36 @@ class HomeViewModel @Inject constructor(
         get() = _moviesData.asStateFlow()
 
 
-    fun fetchHomeViewData() {
-        viewModelScope.launch {
-            homeRepository.getMovies("popular").
-            combine(
-                homeRepository.fetchTabs()
-            ) { trending: Resource<MovieList>, tabs: List<MovieTabs> ->
-                HomeState(tabs, trending.data)
-            }.stateIn(viewModelScope).collect {
-                _homeStateUIModel.value = it
-            }
-        }
-    }
+//    fun fetchHomeViewData() {
+//        viewModelScope.launch {
+//            homeRepository.getMovies("popular").
+//            combine(
+//                homeRepository.fetchTabs()
+//            ) { trending: Resource<MovieList>, tabs: List<MovieTabs> ->
+//                HomeState(tabs, trending.data)
+//            }.stateIn(viewModelScope).collect {
+//                _homeStateUIModel.value = it
+//            }
+//        }
+//    }
 
 
 
     fun fetchMovies(type: String) {
-        viewModelScope.launch {
-            homeRepository.getMovies(type).collect {
-                _moviesData.value = it.data
+        fetchMoviesUseCase(type).onEach { result ->
+            when(result) {
+                is Resource.Loading -> {
 
+                }
+
+                is Resource.Success -> {
+                    _moviesData.value = result.data
+                }
+
+                is Resource.Error -> {
+
+                }
             }
-        }
+        }.launchIn(viewModelScope)
     }
 }

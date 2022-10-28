@@ -182,6 +182,7 @@ fun MovieList(viewModel: HomeViewModel) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
+            .background(Color.Black)
     ) {
         movieListState.value?.results?.let {
             items(it) { movie ->
