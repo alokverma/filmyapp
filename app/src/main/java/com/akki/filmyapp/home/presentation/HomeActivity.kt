@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.akki.filmyapp.databinding.HomeActivityBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
 
@@ -16,6 +15,4 @@ class HomeActivity : AppCompatActivity() {
         binding = HomeActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
-
-
 }

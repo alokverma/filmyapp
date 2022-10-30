@@ -11,18 +11,15 @@ import javax.inject.Inject
 class FetchMoviesUseCase @Inject constructor(
     private val repository: IHomeRepository
 ) {
-    operator fun invoke(type:String): kotlinx.coroutines.flow.Flow<Resource<MovieList>> =
+    operator fun invoke(type: String): kotlinx.coroutines.flow.Flow<Resource<MovieList>> =
         flow {
             try {
                 emit(Resource.Loading())
                 emit(Resource.Success(repository.getMovies(type)))
             } catch (e: HttpException) {
                 emit(Resource.Error("Something went wrong"))
-
             } catch (e: IOException) {
                 emit(Resource.Error("Something went wrong"))
             }
-
         }
-
 }
