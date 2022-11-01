@@ -9,12 +9,9 @@ import com.akki.filmyapp.home.domain.getmoviesusecase.FetchMoviesUseCase
 import com.akki.filmyapp.home.domain.model.HomeState
 import com.akki.filmyapp.home.domain.model.MovieItem
 import com.akki.filmyapp.home.domain.model.MovieList
-import com.akki.filmyapp.home.domain.model.MovieTabs
-import com.akki.filmyapp.home.domain.repository.IHomeRepository
 import com.akki.filmyapp.logging.ILogger
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.* // ktlint-disable no-wildcard-imports
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,7 +31,6 @@ class HomeViewModel @Inject constructor(
     private val _homeUiState = mutableStateOf(HomeUIState())
     val homeUiState: State<HomeUIState> = _homeUiState
 
-
 //    fun fetchHomeViewData() {
 //        viewModelScope.launch {
 //            homeRepository.getMovies("popular").
@@ -48,7 +44,6 @@ class HomeViewModel @Inject constructor(
 //        }
 //    }
 
-
     fun fetchMovies(type: String) {
         fetchMoviesUseCase(type).onEach { result ->
             when (result) {
@@ -57,7 +52,10 @@ class HomeViewModel @Inject constructor(
                 }
 
                 is Resource.Success -> {
-                    _homeUiState.value = HomeUIState(result.data?.results ?: emptyList(), false)
+                    _homeUiState.value = HomeUIState(
+                        result.data?.results ?: emptyList(),
+                        false
+                    )
                 }
 
                 is Resource.Error -> {
