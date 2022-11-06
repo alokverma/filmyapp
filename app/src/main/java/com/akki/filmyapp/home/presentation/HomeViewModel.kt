@@ -31,6 +31,10 @@ class HomeViewModel @Inject constructor(
     private val _homeUiState = mutableStateOf(HomeUIState())
     val homeUiState: State<HomeUIState> = _homeUiState
 
+    init {
+        fetchMovies("popular")
+    }
+
 //    fun fetchHomeViewData() {
 //        viewModelScope.launch {
 //            homeRepository.getMovies("popular").
@@ -44,7 +48,7 @@ class HomeViewModel @Inject constructor(
 //        }
 //    }
 
-    fun fetchMovies(type: String) {
+    private fun fetchMovies(type: String) {
         fetchMoviesUseCase(type).onEach { result ->
             when (result) {
                 is Resource.Loading -> {

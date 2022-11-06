@@ -33,7 +33,10 @@ import kotlin.random.Random
 typealias onItemClick = (Int) -> Unit
 
 @Composable
-fun HomeScreenV2(viewModel: HomeViewModel, onItemClick: onItemClick) {
+fun HomeScreenV2(
+    viewModel: HomeViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    onItemClick: onItemClick
+) {
     val homeState = remember { viewModel.homeUiState }
     Box(
         modifier = Modifier.fillMaxSize()
