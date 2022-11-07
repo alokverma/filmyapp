@@ -1,16 +1,17 @@
 package com.akki.filmyapp.home.domain.repository
 
-import com.akki.filmyapp.basemodel.Resource
 import com.akki.filmyapp.home.domain.model.Genre
 import com.akki.filmyapp.home.domain.model.MovieList
 import com.akki.filmyapp.home.domain.model.MovieTabs
-import kotlinx.coroutines.flow.Flow
+import com.google.gson.JsonObject
 
 interface IHomeRepository {
 
-    suspend fun getMovies(type: String) : Flow<Resource<MovieList>>
+    suspend fun getMovies(type: String): MovieList
 
-    suspend fun fetchGenre(): Flow<Resource<Genre>>
+    suspend fun fetchGenre(): Genre?
 
-    suspend fun fetchTabs(): Flow<List<MovieTabs>>
+    suspend fun fetchTabs(): MovieTabs?
+
+    suspend fun movieDetails(): JsonObject?
 }

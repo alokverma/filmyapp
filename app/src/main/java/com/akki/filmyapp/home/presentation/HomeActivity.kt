@@ -1,21 +1,26 @@
 package com.akki.filmyapp.home.presentation
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.akki.filmyapp.databinding.HomeActivityBinding
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.akki.filmyapp.navigation.SetupNavigationGraph
+import com.akki.filmyapp.ui.theme.FilmyAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : ComponentActivity() {
 
-    private lateinit var binding: HomeActivityBinding
+    private lateinit var navHostController: NavHostController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = HomeActivityBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContent {
+            FilmyAppTheme {
+                navHostController = rememberNavController()
+                SetupNavigationGraph(navHostController = navHostController)
+            }
+        }
     }
-
-
 }
