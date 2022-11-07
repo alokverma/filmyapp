@@ -173,7 +173,7 @@ fun ImageCard(
         AsyncImage(
             contentDescription = contentDescription,
             modifier = Modifier.clip(CutCornerShape(1)),
-            imageUrl = imageUrl,
+            imageUrl = imageUrl
         )
     }
 }

@@ -11,5 +11,4 @@ class LoggerService : ILogger {
     override fun logException(exception: Exception) {
         Timber.d(exception)
     }
-
 }
