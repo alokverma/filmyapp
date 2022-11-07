@@ -18,7 +18,10 @@ import com.akki.filmyapp.ui.theme.Typography
 
 @Composable
 fun DetailScreen(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    movieName: String,
+    movieId: Int,
+    description: String
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
@@ -32,7 +35,7 @@ fun DetailScreen(
 
         Text(
             modifier = Modifier.padding(4.dp),
-            text = "Once Upon a Time in Hollywood 2019",
+            text = movieName,
             style = Typography.h5
         )
 
@@ -44,9 +47,7 @@ fun DetailScreen(
         StarList()
         Text(
             modifier = Modifier.padding(4.dp),
-            text = "Once Upon a Time in Hollywood is movie set in 1980 starring Leo" +
-                "and Brad pitt. Its a sarcastic comedy about a actor who is loosing touch " +
-                "in hollywood",
+            text = description,
             style = Typography.body1
         )
     }
@@ -56,7 +57,7 @@ fun DetailScreen(
 @Composable
 fun DetailScreenComposable() {
     val navHostController = rememberNavController()
-    DetailScreen(navHostController = navHostController)
+    DetailScreen(navHostController = navHostController, "", 1, "")
 }
 
 @Composable

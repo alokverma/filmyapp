@@ -1,5 +1,6 @@
 package com.akki.filmyapp.home.presentation
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.* // ktlint-disable no-wildcard-imports
@@ -32,8 +33,6 @@ import com.akki.filmyapp.R
 import com.akki.filmyapp.api.Constants
 import com.akki.filmyapp.navigation.Screen
 import com.akki.filmyapp.ui.theme.Typography
-
-typealias onItemClick = (Int) -> Unit
 
 @Composable
 fun HomeScreenV2(
@@ -107,7 +106,14 @@ fun MovieListItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        navController.navigate(Screen.DetailScreen.screenName)
+                        navController.navigate(
+                            route = Screen.DetailScreen.passMovieNameImageId(
+                                movieId = movieId,
+                                movieImage = "imageUrl",
+                                movieName = title,
+                                description = movieGenre
+                            )
+                        )
                     }
             ) {
                 ImageCard(
