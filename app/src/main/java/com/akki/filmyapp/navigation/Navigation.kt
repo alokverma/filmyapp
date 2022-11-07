@@ -1,11 +1,11 @@
 package com.akki.filmyapp.navigation // ktlint-disable filename
 
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.akki.filmyapp.home.presentation.HomeScreenV2
+import com.akki.filmyapp.home.presentation.details.DetailScreen
 
 @Composable
 fun SetupNavigationGraph(
@@ -26,11 +26,4 @@ fun SetupNavigationGraph(
             DetailScreen(navHostController = navHostController)
         }
     }
-}
-
-@Composable
-fun DetailScreen(
-    navHostController: NavHostController
-) {
-    Text(text = "DetailScreen")
 }

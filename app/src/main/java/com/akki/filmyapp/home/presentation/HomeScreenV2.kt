@@ -32,7 +32,6 @@ import com.akki.filmyapp.R
 import com.akki.filmyapp.api.Constants
 import com.akki.filmyapp.navigation.Screen
 import com.akki.filmyapp.ui.theme.Typography
-import kotlin.random.Random
 
 typealias onItemClick = (Int) -> Unit
 
@@ -103,14 +102,6 @@ fun MovieListItem(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(
-                    Color(
-                        red = Random.nextFloat(),
-                        blue = Random.nextFloat(),
-                        green = Random.nextFloat()
-                    )
-                )
-
         ) {
             Row(
                 modifier = Modifier
@@ -143,7 +134,7 @@ fun MovieListItem(
                                 horizontal = 8.dp
                             ),
                         text = title,
-                        color = MaterialTheme.colors.onPrimary,
+                        color = MaterialTheme.colors.onSecondary,
                         fontWeight = FontWeight.W900,
                         fontSize = 16.sp,
                         style = Typography.h5
@@ -156,7 +147,7 @@ fun MovieListItem(
                             )
                             .fillMaxWidth(.8f),
                         text = movieGenre,
-                        color = MaterialTheme.colors.onPrimary,
+                        color = MaterialTheme.colors.onSecondary,
                         overflow = TextOverflow.Ellipsis,
                         fontSize = 16.sp,
                         style = Typography.body1
@@ -180,14 +171,29 @@ fun ImageCard(
         elevation = 5.dp
     ) {
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(imageUrl)
-                .crossfade(true)
-                .build(),
-            placeholder = painterResource(R.drawable.leo),
             contentDescription = contentDescription,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.clip(CutCornerShape(1))
+            modifier = Modifier.clip(CutCornerShape(1)),
+            imageUrl = imageUrl,
         )
     }
+}
+
+@Composable
+fun AsyncImage(
+    contentDescription: String,
+    modifier: Modifier,
+    imageUrl: String,
+    resourceId: Int = R.drawable.leo
+) {
+    AsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(imageUrl)
+            .crossfade(true)
+            .build(),
+        placeholder = painterResource(resourceId),
+        contentDescription = contentDescription,
+        contentScale = ContentScale.Crop,
+        error = painterResource(resourceId),
+        modifier = modifier
+    )
 }
