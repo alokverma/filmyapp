@@ -6,9 +6,10 @@ import com.google.gson.JsonObject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
+import javax.inject.Inject
 
-class MovieDetailUseCase(
-    val repository: IHomeRepository
+class MovieDetailUseCase @Inject constructor(
+    private val repository: IHomeRepository
 ) {
 
     operator fun invoke(): Flow<Resource<JsonObject>> {

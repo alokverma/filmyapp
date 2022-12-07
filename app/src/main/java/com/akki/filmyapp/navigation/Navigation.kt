@@ -7,12 +7,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.akki.filmyapp.home.presentation.HomeScreenV2
+import com.akki.filmyapp.home.presentation.HomeViewModel
 import com.akki.filmyapp.home.presentation.details.DetailScreen
 import timber.log.Timber
 
 @Composable
 fun SetupNavigationGraph(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    viewModel: HomeViewModel
 ) {
     NavHost(
         navController = navHostController,
@@ -21,7 +23,7 @@ fun SetupNavigationGraph(
         composable(
             route = Screen.HomeScreen.screenName
         ) {
-            HomeScreenV2(navController = navHostController)
+            HomeScreenV2(navController = navHostController, viewModel = viewModel)
         }
         composable(
             route = Screen.DetailScreen.screenName,

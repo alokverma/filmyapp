@@ -3,6 +3,7 @@ package com.akki.filmyapp.home.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.akki.filmyapp.navigation.SetupNavigationGraph
@@ -16,10 +17,14 @@ class HomeActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val viewModel: HomeViewModel by viewModels()
         setContent {
             FilmyAppTheme {
                 navHostController = rememberNavController()
-                SetupNavigationGraph(navHostController = navHostController)
+                SetupNavigationGraph(
+                    navHostController = navHostController,
+                    viewModel
+                )
             }
         }
     }
