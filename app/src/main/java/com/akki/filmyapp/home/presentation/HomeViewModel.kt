@@ -1,5 +1,6 @@
 package com.akki.filmyapp.home.presentation
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,7 @@ import com.akki.filmyapp.home.domain.model.MovieList
 import com.akki.filmyapp.logging.ILogger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.* // ktlint-disable no-wildcard-imports
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -67,6 +69,12 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        // logger.logMessage(message = "onClear")
+        Timber.tag("alok").d("oncreate")
     }
 }
 

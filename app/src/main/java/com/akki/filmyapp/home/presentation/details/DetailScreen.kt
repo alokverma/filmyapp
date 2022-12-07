@@ -1,16 +1,20 @@
 package com.akki.filmyapp.home.presentation.details
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.* // ktlint-disable no-wildcard-imports
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.akki.filmyapp.home.presentation.AsyncImage
@@ -23,13 +27,21 @@ fun DetailScreen(
     movieId: Int,
     description: String
 ) {
+    val viewModel = hiltViewModel<DetailViewModel>()
+    val detailState = remember { viewModel.detailUiState }
+
     Column(
-        modifier = Modifier.fillMaxSize()
-            .background(MaterialTheme.colors.background)
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(
+                rememberScrollState()
+            ).background(MaterialTheme.colors.background)
     ) {
         AsyncImage(
-            modifier = Modifier.fillMaxHeight(.5f),
-            contentDescription = "dummy",
+            modifier = Modifier
+                .fillMaxHeight(.5f)
+                .fillMaxWidth(),
+            contentDescription = "dumm",
             imageUrl = "https://www.google.com"
         )
 
@@ -41,15 +53,16 @@ fun DetailScreen(
 
         Text(
             modifier = Modifier.padding(4.dp),
-            text = "Actors",
-            style = Typography.h5
-        )
-        StarList()
-        Text(
-            modifier = Modifier.padding(4.dp),
             text = description,
             style = Typography.body1
         )
+
+        Text(
+            modifier = Modifier.padding(4.dp),
+            text = "Actors",
+            style = Typography.h6
+        )
+        ActorList()
     }
 }
 
@@ -57,11 +70,16 @@ fun DetailScreen(
 @Composable
 fun DetailScreenComposable() {
     val navHostController = rememberNavController()
-    DetailScreen(navHostController = navHostController, "", 1, "")
+    DetailScreen(
+        navHostController = navHostController,
+        "Once Upon a time in Hollywood",
+        1,
+        "This is sample movie"
+    )
 }
 
 @Composable
-fun StarList(
+fun ActorList(
     modifier: Modifier = Modifier
 ) {
     LazyRow(

@@ -1,11 +1,11 @@
 # filmyapp
 
-Sample movie app usgin compose:  
+Sample movie app Built using
+# Jetpack Compose:  
 # MVVM with clean Arch
 # Hilt
-# Jetpack Compose
 # Flows
-# Unit Testing
+# JUnit Testing
 # Retrofit
 # Coroutines
 # TMDB apis

@@ -1,6 +1,5 @@
 package com.akki.filmyapp.home.presentation
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.* // ktlint-disable no-wildcard-imports
@@ -36,9 +35,10 @@ import com.akki.filmyapp.ui.theme.Typography
 
 @Composable
 fun HomeScreenV2(
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: HomeViewModel
 ) {
-    val viewModel = hiltViewModel<HomeViewModel>()
+
     val homeState = remember { viewModel.homeUiState }
     Box(
         modifier = Modifier.fillMaxSize()
